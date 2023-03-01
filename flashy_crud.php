@@ -103,11 +103,11 @@ function save($file_name, $file_content){
     return $this->save_file($file_name);
 }
 
-function create($file_name, $file_columns, $return, $destroy_existing_file){
+function create($file_name, $file_columns, $return = false, $destroy_existing_file = false){
     return $this->create_file($file_name, $file_columns, $return, $destroy_existing_file);
 }
 
-function add($file_name, $record_content, $return){
+function add($file_name, $record_content, $return = false){
     return $this->add_record($file_name, $record_content, $return);
 }
 
