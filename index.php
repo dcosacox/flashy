@@ -72,8 +72,6 @@ foreach($contents as $table_key=>$row){
                 echo "<th>$column</th>";
                 $last_id = max($last_id, $column);
             }
-            
-            
         }
         if($table_key != 0){
             echo "<td><input type='hidden' name='file_name' value='json2.json'/>";
@@ -121,8 +119,7 @@ if(isset($_SESSION['msg']) && isset($_SESSION['created'])){
 }
 echo "</form>";
 
-// ---------------- Part 2 -----------------------
-
+// ---------------- Part 2 ------- using export class -----------
 
 echo "<h1>Export class</h1>";
 echo "<h2>Choose the records to export</h2>";

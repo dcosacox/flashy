@@ -17,6 +17,12 @@ class flashyExport {
         return $this->read_file($file_name);
     }
 
+    /**
+     * @date 2023-03-01
+     * @param {any} $file_name - The name of the file
+     * @param {any} $filter_fields - The columns to export
+     * @returns To main page showing the new data 
+     */
     function export($file_name, $filter_fields){
        unset($filter_fields['file_name']);
 
@@ -26,19 +32,21 @@ class flashyExport {
        $new_header = array_intersect_key($file_contents_arr[0], $filter_fields); // the new columns that we should keep
 
        // create file with the new headers
-       $this->flashy->create('export_' . $file_name, implode(',',$new_header), true, true);
+       $export_file_name = 'export_' . $file_name; // add prefix to original file name
+       $this->flashy->create($export_file_name, implode(',',$new_header), true, true);
         
        unset($file_contents_arr[0]); // remove first record of file, the created file already contains it
-        foreach($file_contents_arr as $file_record){
-            $this->flashy->add('export_' . $file_name, array_values(array_intersect_key($file_record, $filter_fields)), true);
+       
+       // Add every remaining value to the created
+       $counter = 1;
+       foreach($file_contents_arr as $file_record){
+            $this->flashy->add($export_file_name, array_values(array_intersect_key($file_record, $filter_fields)), true);
+            $counter++;
        }
  
-       $file_contents = $this->flashy->read('export_' . $file_name);
-       $file_contents_arr = json_decode($file_contents, true);
-
-       $_SESSION['file_name'] = 'export_' . $file_name;
+       $_SESSION['file_name'] = $export_file_name;
        $_SESSION['msg'] = 'created successfully';
-       $_SESSION['row'] = count($file_contents_arr);
+       $_SESSION['row'] = $counter;
        header("Location: /flashy");
         
     }
