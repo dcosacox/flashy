@@ -1,5 +1,7 @@
 <?php
 
+defined('MAIN_FOLDER') || define ('MAIN_FOLDER', '/flashy');
+
 class flashyExport {
 
     function __construct(){
@@ -45,9 +47,10 @@ class flashyExport {
        }
  
        $_SESSION['file_name'] = $export_file_name;
+       $_SESSION['exported'] = true;
        $_SESSION['msg'] = 'created successfully';
        $_SESSION['row'] = $counter;
-       header("Location: /flashy");
+       header("Location: ". MAIN_FOLDER);
         
     }
 
@@ -59,6 +62,12 @@ if(isset($_SERVER['PATH_INFO'])){
     
     switch($_SERVER['PATH_INFO']){
         case '/export':
+            if(count($_POST)==1){
+                $_SESSION['exported'] = false;
+                $_SESSION['msg'] = 'The file was not created, please mark at least one field';
+                header("Location: ". MAIN_FOLDER);
+                die;
+            }
             $flashy_export->export($_POST['file_name'], $_POST);
             break;
         default:

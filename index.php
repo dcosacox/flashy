@@ -1,4 +1,7 @@
 <?php
+
+defined('MAIN_FOLDER') || define ('MAIN_FOLDER', '/flashy');
+
 include "flashy_crud.php";
 include "flashy_export.php";
 
@@ -142,8 +145,12 @@ echo "</table>";
 echo "<input type='submit' value='Export settings' />";
 echo "</form>";
 
-if(isset($_SESSION['file_name'])){
+if(isset($_SESSION['file_name']) && $_SESSION['exported']){
     echo "<span style='color:red;'>". $_SESSION['file_name'] . ' ' . $_SESSION['msg'] . "</span></br>";
     echo "The file data is: " . $flashy->read($_SESSION['file_name']);
+}
+if(isset($_SESSION['msg']) && isset($_SESSION['exported']) && !$_SESSION['exported']){
+    echo "<td style='color:red;'>". $_SESSION['msg'] . "</td>";
+    session_destroy();
 }
 ?>

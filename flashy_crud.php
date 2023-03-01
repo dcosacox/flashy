@@ -1,5 +1,6 @@
 <?php
 session_start();
+defined('MAIN_FOLDER') || define ('MAIN_FOLDER', '/flashy');
 class flashyCrud {
 
 
@@ -45,7 +46,7 @@ private function create_file($file_name, $file_columns, $return = false, $destro
     }
     
     if(!$return) {
-        header("Location: /flashy");
+        header("Location: ". MAIN_FOLDER);
         die();
     } else {
         return;
@@ -86,7 +87,7 @@ private function add_record($file_name, $new_record_content, $return = false){
     $_SESSION['row'] = count($content_arr);
 
     if(!$return) {
-        header("Location: /flashy");
+        header("Location: ". MAIN_FOLDER);
         die();
     } else {
         return;
@@ -165,7 +166,7 @@ function update_by_key($file_name, $row_id, $new_arr){
     $_SESSION['msg'] = 'done';
     $_SESSION['row'] = $row_id;
     $_SESSION['action'] = 'updated';
-    header("Location: /flashy");
+    header("Location: ". MAIN_FOLDER);
     die();
 }
 
@@ -195,7 +196,7 @@ function delete_by_key($file_name, $row_id, $new_arr){
     $_SESSION['msg'] = 'done';
     $_SESSION['row'] = count($new_file_content);
     $_SESSION['action'] = 'deleted';
-    header("Location: /flashy");
+    header("Location: ". MAIN_FOLDER);
     die();
 }
 
